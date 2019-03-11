@@ -1,0 +1,21 @@
+test -s ~/.alias && . ~/.alias || true
+
+bash_init() {
+
+  local source_path
+  source_path="$(dirname $(readlink "$HOME/.bashrc"))"
+
+  source_files_from_directory() {
+    local directory="${source_path}/$1"
+
+    for source_file in $(ls "$directory"/*.sh); do
+      source $source_file
+    done
+  }
+
+  source_files_from_directory lib
+  source_files_from_directory rc.d
+
+}
+
+bash_init
