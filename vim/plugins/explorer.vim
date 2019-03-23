@@ -14,9 +14,16 @@ function! s:CloseExplorer()
   endif
 endfunction
 
+function! s:InitExplorer()
+  let g:NERDTreeShowHidden = 1
+
+  " Hide the string 'Press ? for help'
+  let g:NERDTreeMinimalUI = 1
+endfunction
+
 augroup explorer
   autocmd!
-  autocmd User VimLoaded let g:NERDTreeShowHidden = 1
+  autocmd User VimLoaded call s:InitExplorer()
   autocmd VimEnter * call s:OpenExplorer()
   autocmd BufEnter * call s:CloseExplorer()
   autocmd StdinReadPre * let s:stdin = 1
