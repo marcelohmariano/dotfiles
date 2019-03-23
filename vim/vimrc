@@ -31,3 +31,4 @@ call s:SetOptions()
 call s:LoadPlugins()
 
 doautocmd User VimLoaded
+colorscheme dracula
