@@ -1,34 +1,19 @@
 source $VIMRUNTIME/defaults.vim
 
-let s:source_path = fnamemodify(resolve(expand('~/.vimrc')), ':p:h')
+function! s:LoadScriptsFrom(directory)
+  let l:directory = fnamemodify(a:directory, ':p')
 
-function! s:SourceFilesFromDirectory(directory)
-  let l:source_directory = s:source_path . '/' . a:directory
-  let l:source_files = globpath(l:source_directory, '*.vim', 0, 1)
+  if isdirectory(l:directory)
+    let s:scripts = globpath(l:directory, '*.vim', 0, 1)
 
-  for source_file in l:source_files
-    execute 'source' source_file
-  endfor
+    for script in s:scripts
+      execute 'source' script
+    endfor
+  endif
 endfunction
 
-function! s:SetOptions()
-  set background=dark
-  set hlsearch
-  set mouse=a
-  set number
-  set termguicolors
-  set splitbelow
-  set splitright
-endfunction
-
-function! s:LoadPlugins()
-  call plug#begin()
-  call s:SourceFilesFromDirectory('plugins')
-  call plug#end()
-endfunction
-
-call s:SetOptions()
-call s:LoadPlugins()
+call plug#begin()
+call s:LoadScriptsFrom('~/.vim')
+call plug#end()
 
 doautocmd User VimLoaded
-colorscheme dracula

@@ -1,6 +1,8 @@
 Plug 'scrooloose/nerdtree'
 
-function! s:OpenExplorer()
+let s:Explorer = {}
+
+function! s:Explorer.Open()
   if argc() == 1 && isdirectory(argv()[0]) && !exists('s:stdin')
     silent! execute 'NERDTree' argv()[0]
     wincmd p
@@ -8,13 +10,13 @@ function! s:OpenExplorer()
   endif
 endfunction
 
-function! s:CloseExplorer()
+function! s:Explorer.Close()
   if winnr('$') == 1 && exists('b:NERDTree') && b:NERDTree.isTabTree()
     quit
   endif
 endfunction
 
-function! s:InitExplorer()
+function! s:Explorer.Init()
   let g:NERDTreeShowHidden = 1
 
   " Hide the string 'Press ? for help'
@@ -23,8 +25,8 @@ endfunction
 
 augroup explorer
   autocmd!
-  autocmd User VimLoaded call s:InitExplorer()
-  autocmd VimEnter * call s:OpenExplorer()
-  autocmd BufEnter * call s:CloseExplorer()
+  autocmd User VimLoaded call s:Explorer.Init()
+  autocmd VimEnter * call s:Explorer.Open()
+  autocmd BufEnter * call s:Explorer.Close()
   autocmd StdinReadPre * let s:stdin = 1
 augroup END

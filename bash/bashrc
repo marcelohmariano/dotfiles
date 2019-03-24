@@ -2,20 +2,17 @@ test -s ~/.alias && . ~/.alias || true
 
 bash_init() {
 
-  local source_path
-  source_path="$(dirname $(readlink "$HOME/.bashrc"))"
+  load_scripts_from() {
+    local directory="$1"
 
-  source_files_from_directory() {
-    local directory="${source_path}/$1"
-
-    for source_file in $(ls "$directory"/*.sh); do
-      source $source_file
-    done
+    if [ -d "$directory" ]; then
+      for script in $(ls "$directory"/*.sh); do
+        source $script
+      done
+    fi
   }
 
-  source_files_from_directory lib
-  source_files_from_directory rc.d
-
+  load_scripts_from "$HOME/.bashrc.d"
 }
 
 bash_init
