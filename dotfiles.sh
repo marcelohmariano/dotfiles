@@ -5,12 +5,15 @@ source runner.sh
 source installer.sh
 
 show_usage_and_exit() {
-  echo "Usage: `basename $0` <install|uninstall>" >&2
+  echo "Usage: `basename $0` <install|uninstall|reinstall>" >&2
   exit 1
 }
 
 is_valid_action() {
-  (test "$1" == "install" || test "$1" == "uninstall") && return 0
+  (test "$1" == "install" \
+    || test "$1" == "uninstall" \
+    || test "$1" == "reinstall") \
+    && return 0
   return 1
 }
 
@@ -28,7 +31,12 @@ main() {
     script="$directory/$(basename ${directory}).sh"
 
     if [ -f "$script" ]; then
-      runner::run "$script" $1
+      if [ "$1" == "reinstall" ]; then
+        runner::run "$script" uninstall
+        runner::run "$script" install
+      else
+        runner::run "$script" $1
+      fi
     fi
   done
 }
