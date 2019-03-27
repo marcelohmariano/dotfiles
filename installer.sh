@@ -9,7 +9,7 @@ installer::install() {
   for file in $@; do
     fullpath="$(realpath "$file")"
     dotfile=".$(basename "$file")"
-    rm -f "$HOME/$dotfile"
+    rm -rf "$HOME/$dotfile"
     ln -vs "$fullpath" "$HOME/$dotfile"
   done
 }
