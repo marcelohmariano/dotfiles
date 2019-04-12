@@ -1,9 +1,9 @@
 #!/bin/bash
 
-xdocker-run() {
+docker-run-x11() {
 
 usage() {
-  echo_error "Usage: USER=<user> xdocker-run <args>"
+  echo_error "Usage: USER=<user> docker-run-x11 <args>"
 }
 
 if [ -z "$USER" ] || [ -z "$1" ]; then
