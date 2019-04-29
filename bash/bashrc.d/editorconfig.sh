@@ -2,7 +2,7 @@
 
 editorconfig() {
 
-local root=false
+local root=true
 
 local charset="utf-8"
 local end_of_line="lf"
@@ -14,12 +14,12 @@ local trim_trailing_whitespace=true
 usage() {
   echo_error -e "Usage: editorconfig [options]\n"
   echo_error -e "Options:\n"
-  echo_error -e "  --root=<true|false>: set 'root' property. (Default: ${root})"
-  echo_error -e "  --eof=<lf|cr|crlf>: set 'end_of_line' property. (Default: ${end_of_line})"
-  echo_error -e "  --tabsize=<size>: set 'indent_size' property. (Default: ${indent_size})"
-  echo_error -e "  --tabstyle=<space|tab>: set 'indent_style' property. (Default: ${indent_style})"
-  echo_error -e "  --newline=<true|false>: set 'insert_final_newline' property. (Default: ${insert_final_newline})"
-  echo_error -e "  --no-whitespace=<true|false>: set 'trim_trailing_whitespace' property. (Default: ${trim_trailing_whitespace})\n"
+  echo_error -e "  --allow-trailing-whitespace  do not remove whitespaces at the end of lines"
+  echo_error -e "  --eof=EOF                    set the end-of-line character for files"
+  echo_error -e "  --insert-final-newline       insert new line at the end of files"
+  echo_error -e "  --no-root                    do not consider this file as the root EditorConfig file"
+  echo_error -e "  --indent-size=SIZE           set the indent size the editor must use"
+  echo_error -e "  --indent-style=STYLE         set the indent style (space or tab) the editor must use\n"
 }
 
 while [ ! -z "$1" ]; do
@@ -35,24 +35,27 @@ while [ ! -z "$1" ]; do
       usage
       return 1
       ;;
-    --root=*)
-      root="${1#*=}"
+    --allow-trailing-whitespace)
+      trim_trailing_whitespace=false
       ;;
     --eof=*)
       end_of_line="${1#*=}"
       ;;
-    --tabsize=*)
+    --insert-final-newline)
+      insert_final_newline=true
+      ;;
+    --no-root)
+      root=false
+      ;;
+    --indent-size=*)
       indent_size="${1#*=}"
       ;;
-    --tabstyle=*)
+    --indent-style=*)
       indent_style="${1#*=}"
       ;;
-    --newline=*)
-      insert_final_newline="${1#*=}"
-      ;;
-    --no-whitespace=*)
-      trim_trailing_whitespace="${1#*=}"
-      ;;
+    *)
+      usage
+      return 1
   esac
 
   shift
