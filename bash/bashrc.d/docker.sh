@@ -3,7 +3,7 @@
 docker-run-x11() {
 
 usage() {
-  echo_error "Usage: USER=<user> docker-run-x11 <args>"
+  echo_error "Usage: USER=<user> [DISPLAY=<display>] docker-run-x11 <args>"
 }
 
 if [ -z "$USER" ] || [ -z "$1" ]; then
