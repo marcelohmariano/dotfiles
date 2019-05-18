@@ -1,4 +1,5 @@
 #!/bin/bash
+
 pushd $(realpath $(dirname $0)) >/dev/null && trap "popd >/dev/null" EXIT
 
 source runner.sh
