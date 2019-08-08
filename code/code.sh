@@ -19,6 +19,7 @@ code::install() {
   code::install_extension "icrawl.discord-vscode"
   code::install_extension "ms-vscode.cpptools"
   code::install_extension "peterjausovec.vscode-docker"
+  code::install_extension "timonwong.shellcheck"
   code::install_extension "twxs.cmake"
 }
 
@@ -33,5 +34,6 @@ code::uninstall() {
   code::uninstall_extension "icrawl.discord-vscode"
   code::uninstall_extension "ms-vscode.cpptools"
   code::uninstall_extension "peterjausovec.vscode-docker"
+  code::uninstall_extension "timonwong.shellcheck"
   code::uninstall_extension "twxs.cmake"
 }
