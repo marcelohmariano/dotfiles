@@ -12,6 +12,7 @@ code::install() {
   echo 'Installing code...'
 
   code::install_extension "bierner.markdown-preview-github-styles"
+  code::install_extension "dart-code.flutter"
   code::install_extension "davidanson.vscode-markdownlint"
   code::install_extension "dunstontc.viml"
   code::install_extension "formulahendry.terminal"
@@ -27,6 +28,7 @@ code::uninstall() {
   echo 'Uninstalling code...'
 
   code::uninstall_extension "bierner.markdown-preview-github-styles"
+  code::uninstall_extension "dart-code.flutter"
   code::uninstall_extension "davidanson.vscode-markdownlint"
   code::uninstall_extension "dunstontc.viml"
   code::uninstall_extension "formulahendry.terminal"
