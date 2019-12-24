@@ -1,21 +1,23 @@
 #!/bin/bash
 
-pushd $(realpath $(dirname $0)) >/dev/null && trap "popd >/dev/null" EXIT
+pushd "$(realpath "$(dirname "$0")")" >/dev/null && trap "popd >/dev/null" EXIT
 
-source runner.sh
-source installer.sh
+source src/runner.sh
+source src/installer.sh
 
 show_usage_and_exit() {
-  echo "Usage: `basename $0` <install|uninstall|reinstall>" >&2
+  echo "Usage: $(basename "$0") <install|uninstall|reinstall>" >&2
   exit 1
 }
 
 is_valid_action() {
-  (test "$1" == "install" \
-    || test "$1" == "uninstall" \
-    || test "$1" == "reinstall") \
-    && return 0
-  return 1
+  case $1 in
+    install|uninstall|reinstall)
+      return 0
+      ;;
+    *)
+      return 1
+  esac
 }
 
 main() {
@@ -29,14 +31,14 @@ main() {
   directories="$(find . -mindepth 1 -maxdepth 1 -not -path '*/\.*' -type d)"
 
   for directory in $directories; do
-    script="$directory/$(basename ${directory}).sh"
+    script="$directory/$(basename "$directory").sh"
 
     if [ -f "$script" ]; then
       if [ "$1" == "reinstall" ]; then
         runner::run "$script" uninstall
         runner::run "$script" install
       else
-        runner::run "$script" $1
+        runner::run "$script" "$1"
       fi
     fi
   done
